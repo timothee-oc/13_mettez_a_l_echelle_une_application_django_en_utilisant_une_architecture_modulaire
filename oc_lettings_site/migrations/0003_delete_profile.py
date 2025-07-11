@@ -6,6 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
+        ('profiles', '0002_migrate_profiles'),
         ('oc_lettings_site', '0002_delete_address_and_letting'),
     ]
 

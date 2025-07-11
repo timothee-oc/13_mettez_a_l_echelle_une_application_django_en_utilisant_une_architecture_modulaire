@@ -5,8 +5,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('lettings/', include('lettings.urls')),
-    path('profiles/', include('profiles.urls')),
+    path('lettings/', include(('lettings.urls', 'lettings'), 'lettings')),
+    path('profiles/', include(('profiles.urls', 'profiles'), 'profiles')),
     path('admin/', admin.site.urls),
-    path('raise_500', views.raise_500),
+    path('raise_500', views.raise_500, name='raise_500'),
 ]
