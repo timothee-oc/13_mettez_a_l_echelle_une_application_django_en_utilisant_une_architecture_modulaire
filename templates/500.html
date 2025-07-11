@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Erreur interne du serveur (500)</h1>
+  <p>Un problème est survenu. Merci de réessayer plus tard.</p>
+  <a href="{% url 'index' %}">Retour à l’accueil</a>
+{% endblock %}
