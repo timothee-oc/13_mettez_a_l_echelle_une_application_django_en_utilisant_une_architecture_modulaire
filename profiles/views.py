@@ -4,9 +4,13 @@ Views for the 'profiles' app.
 This module provides views to list all user profiles and display details
 for a specific profile based on the username.
 """
+from django.http import Http404
 from django.shortcuts import render
 
 from .models import Profile
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Sed placerat quam in pulvinar commodo. Nullam laoreet consectetur ex, sed consequat libero
@@ -48,6 +52,10 @@ def profile(request, username):
     Returns:
         HttpResponse: Rendered HTML page displaying profile details.
     """
-    profile = Profile.objects.get(user__username=username)
+    try:
+        profile = Profile.objects.get(user__username=username)
+    except Profile.DoesNotExist:
+        logger.error(f"Profile not found for user: {username}")
+        raise Http404
     context = {'profile': profile}
     return render(request, 'profiles/profile.html', context)

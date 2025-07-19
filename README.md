@@ -75,3 +75,10 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 
 - Pour activer l'environnement virtuel, `.\venv\Scripts\Activate.ps1` 
 - Remplacer `which <my-command>` par `(Get-Command <my-command>).Path`
+
+### Sentry
+
+1. Créer un compte sur https://sentry.io et un projet Django.
+2. Récupèrer le DSN du projet.
+3. L'ajouter dans un fichier `.env` (ex: SENTRY_DSN=https://<your-key>@o123456.ingest.sentry.io/12345678)
+4. Lors du déploiement, ajouter `SENTRY_DSN` dans les variables d’environnement du serveur.

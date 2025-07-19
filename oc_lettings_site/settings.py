@@ -1,6 +1,8 @@
 import os
-
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -113,3 +115,29 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
+
+load_dotenv()
+
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN"),
+    integrations=[DjangoIntegration()],
+    traces_sample_rate=0.2,
+    send_default_pii=False
+)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+
+    'handlers': {
+        'sentry': {
+            'class': 'sentry_sdk.integrations.logging.EventHandler',
+            'level': 'ERROR',
+        },
+    },
+
+    'root': {
+        'handlers': ['sentry'],
+        'level': 'ERROR',
+    },
+}

@@ -5,9 +5,14 @@ This module handles the display of all lettings as well as
 the detail page for a specific letting.
 """
 
+from django.http import Http404
 from django.shortcuts import render
 
 from .models import Letting
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 # Aenean leo magna, vestibulum et tincidunt fermentum, consectetur quis velit. Sed non placerat
@@ -54,7 +59,11 @@ def letting(request, letting_id):
     Returns:
         HttpResponse: Rendered HTML page displaying letting details.
     """
-    letting = Letting.objects.get(id=letting_id)
+    try:
+        letting = Letting.objects.get(id=letting_id)
+    except Letting.DoesNotExist:
+        logger.error(f"Lettings not found for id {letting_id}")
+        raise Http404
     context = {
         'title': letting.title,
         'address': letting.address,
