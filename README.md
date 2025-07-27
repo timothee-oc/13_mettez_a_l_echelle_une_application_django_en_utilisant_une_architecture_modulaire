@@ -82,3 +82,78 @@ Utilisation de PowerShell, comme ci-dessus sauf :
 2. Récupèrer le DSN du projet.
 3. L'ajouter dans un fichier `.env` (ex: SENTRY_DSN=https://<your-key>@o123456.ingest.sentry.io/12345678)
 4. Lors du déploiement, ajouter `SENTRY_DSN` dans les variables d’environnement du serveur.
+
+### Déploiement
+
+#### Vue d’ensemble
+
+Ce projet utilise une **pipeline CI/CD automatisée** avec GitHub Actions, Docker et Render :
+
+* À chaque **commit sur une branche autre que `master`**, les **tests** et le **linting** sont lancés.
+* À chaque **commit sur la branche `master`** :
+
+  1. Les tests et le linting sont exécutés.
+  2. Si tout est OK, une **image Docker** est construite et **poussée sur Docker Hub**.
+  3. Une fois l’image poussée, **Render** il faut déployer manuellement la nouvelle version du site.
+
+#### Configuration requise
+
+Pour que le déploiement fonctionne correctement, s'assurer que :
+
+* Un **compte Docker Hub** est configuré avec un repository public ou privé pour l’image.
+* Un **compte GitHub** héberge le projet avec le fichier de pipeline `.github/workflows/ci-cd.yml`.
+* Un **compte Render** est configuré avec un service Docker connecté au repo GitHub.
+* Les **secrets GitHub** suivants sont bien ajoutés dans les paramètres du dépôt :
+
+  * `DOCKER_USERNAME` → identifiant Docker Hub
+  * `DOCKER_PASSWORD` → mot de passe ou token Docker Hub
+
+#### 🔑 Variables d’environnement (Render)
+
+Ajouter ces variables d’environnement dans la section "Environment" de Render :
+
+| Nom             | Valeur                                         |
+| --------------- | ---------------------------------------------- |
+| `DEBUG`         | `False` (important en production)              |
+| `SECRET_KEY`    | une clé secrète Django sécurisée               |
+| `ALLOWED_HOSTS` | `your-app-url.render.com`                      |
+| `SENTRY_DSN`    | `https://url@exemple.ingest.de.sentry.io/`     |
+
+#### 🧪 Lancer localement l’application via Docker
+
+1. Créer un fichier `.env` à la racine du projet :
+
+  ```env
+  DEBUG=False
+  SECRET_KEY=your-secret-key
+  ALLOWED_HOSTS=127.0.0.1,localhost
+  ```
+
+2. Construire l’image :
+
+  ```bash
+  docker build -t oc-lettings-site .
+  ```
+
+3. Lancer le conteneur :
+
+  ```bash
+  docker run -p 8000:8000 --env-file .env oc-lettings-site
+  ```
+
+#### Déployer une nouvelle version
+
+1. **Pousser un commit sur `master`** :
+
+   ```bash
+   git checkout master
+   git commit -m "Nouvelles modifications"
+   git push origin master
+   ```
+
+2. GitHub Actions va :
+
+   * Lancer tests + lint
+   * Construire et pusher l’image Docker sur Docker Hub
+
+3. Sur **Render**, déclencher manuellement le déploiement via l’interface (“Manual Deploy”) si le déploiement automatique est désactivé.
