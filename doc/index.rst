@@ -1,8 +1,3 @@
-.. oc-lettings documentation master file, created by
-   sphinx-quickstart on Sun Aug  3 08:21:19 2025.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 ==============================
 Django Project Documentation
 ==============================
@@ -47,7 +42,6 @@ Quick Start Guide
 If Docker is installed, you can run the application with:
 
 .. code-block:: bash
-
 docker build -t oc-lettings-site .
 docker run -p 8000:8000 --env-file .env oc-lettings-site
 
@@ -110,7 +104,6 @@ Use cases:
 Admin panel: available at `/admin/` after creating a superuser:
 
 .. code-block:: bash
-
 python manage.py createsuperuser
 
 Deployment
@@ -127,7 +120,6 @@ CI/CD is automated via GitHub Actions:
 Environment variables must be configured in `.env` or in Render settings:
 
 .. code-block:: text
-
 DEBUG=False
 SECRET_KEY=changeme
 ALLOWED_HOSTS=my-app.onrender.com
@@ -136,7 +128,6 @@ SENTRY_DSN=<optional>
 Static files collection:
 
 .. code-block:: bash
-
 python manage.py collectstatic --noinput
 
 Database: uses SQLite3 by default. No remote configuration needed.
