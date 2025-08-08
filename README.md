@@ -108,7 +108,7 @@ Pour que le déploiement fonctionne correctement, s'assurer que :
   * `DOCKER_USERNAME` → identifiant Docker Hub
   * `DOCKER_PASSWORD` → mot de passe ou token Docker Hub
 
-#### 🔑 Variables d’environnement (Render)
+#### Variables d’environnement (Render)
 
 Ajouter ces variables d’environnement dans la section "Environment" de Render :
 
@@ -119,7 +119,7 @@ Ajouter ces variables d’environnement dans la section "Environment" de Render 
 | `ALLOWED_HOSTS` | `your-app-url.render.com`                      |
 | `SENTRY_DSN`    | `https://url@exemple.ingest.de.sentry.io/`     |
 
-#### 🧪 Lancer localement l’application via Docker
+#### Lancer localement l’application via Docker
 
 1. Créer un fichier `.env` à la racine du projet :
 
