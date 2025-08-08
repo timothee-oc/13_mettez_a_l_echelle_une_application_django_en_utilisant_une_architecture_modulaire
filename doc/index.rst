@@ -117,7 +117,7 @@ CI/CD is automated via GitHub Actions:
 - Linting + Tests + coverage > 80%
 - Build Docker image
 - Push image to Docker Hub
-- Manual deployment via Render
+- Automatic deployment via Render API
 
 Environment variables must be configured in `.env` or in Render settings:
 
@@ -140,7 +140,7 @@ To deploy production updates:
 
 1. Push code to `master`
 2. Wait for Docker Hub image build
-3. Trigger manual deploy on Render ("Manual Deploy")
+3. Wait for deploy on Render
 
 Application Management
 ======================
