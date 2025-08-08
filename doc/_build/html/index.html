@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>oc-lettings documentation &#8212; oc-lettings  documentation</title>
+    <title>Django Project Documentation &#8212; oc-lettings  documentation</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=5ecbeea2" />
     <link rel="stylesheet" type="text/css" href="_static/basic.css?v=b08954a9" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=27fed22d" />
@@ -31,13 +31,139 @@
 
           <div class="body" role="main">
             
-  <section id="oc-lettings-documentation">
-<h1>oc-lettings documentation<a class="headerlink" href="#oc-lettings-documentation" title="Link to this heading">¶</a></h1>
-<p>Add your content using <code class="docutils literal notranslate"><span class="pre">reStructuredText</span></code> syntax. See the
-<a class="reference external" href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">reStructuredText</a>
-documentation for details.</p>
-<div class="toctree-wrapper compound">
+  <section id="django-project-documentation">
+<h1>Django Project Documentation<a class="headerlink" href="#django-project-documentation" title="Link to this heading">¶</a></h1>
+<section id="project-description">
+<h2>Project Description<a class="headerlink" href="#project-description" title="Link to this heading">¶</a></h2>
+<p>This project is a modular Django web application for managing user profiles and rental listings (“lettings”).
+It was designed with scalability in mind and includes testing, CI/CD integration, error monitoring, and production deployment.</p>
+</section>
+<section id="project-installation">
+<h2>Project Installation<a class="headerlink" href="#project-installation" title="Link to this heading">¶</a></h2>
+<p>Requirements:</p>
+<ul class="simple">
+<li><p>Python 3.12</p></li>
+<li><p>Git</p></li>
+<li><p>Docker + Docker Compose (optional for local use)</p></li>
+<li><p>Internet access to install dependencies</p></li>
+<li><p>A <cite>.env</cite> file with required environment variables</p></li>
+</ul>
+<p>Steps:</p>
+<p>1. Clone the repository:
+git clone <a class="reference external" href="https://github.com/your-username/your-repo.git">https://github.com/your-username/your-repo.git</a>
+cd your-repo</p>
+<p>2. Create and activate a virtual environment:
+python -m venv venv
+source venv/bin/activate</p>
+<p>3. Install dependencies:
+pip install -r requirements.txt</p>
+<p>4. Start the local server:
+python manage.py runserver</p>
+</section>
+<section id="quick-start-guide">
+<h2>Quick Start Guide<a class="headerlink" href="#quick-start-guide" title="Link to this heading">¶</a></h2>
+<p>If Docker is installed, you can run the application with:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>oc-lettings-site<span class="w"> </span>.
+docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">8000</span>:8000<span class="w"> </span>--env-file<span class="w"> </span>.env<span class="w"> </span>oc-lettings-site
+</pre></div>
 </div>
+<p>The application will be available at: <a class="reference external" href="http://localhost:8000">http://localhost:8000</a></p>
+</section>
+<section id="technologies-and-languages-used">
+<h2>Technologies and Languages Used<a class="headerlink" href="#technologies-and-languages-used" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p>Python 3.12</p></li>
+<li><p>Django 3.0</p></li>
+<li><p>Gunicorn (for production)</p></li>
+<li><p>Docker</p></li>
+<li><p>GitHub Actions (CI/CD)</p></li>
+<li><p>Render (hosting platform)</p></li>
+<li><p>Sentry (error monitoring)</p></li>
+<li><p>SQLite3 (default database)</p></li>
+</ul>
+</section>
+<section id="database-models">
+<h2>Database Models<a class="headerlink" href="#database-models" title="Link to this heading">¶</a></h2>
+<p><strong>Letting</strong></p>
+<ul class="simple">
+<li><p><cite>title</cite>: CharField</p></li>
+<li><p><cite>address</cite>: ForeignKey to <cite>Address</cite></p></li>
+</ul>
+<p><strong>Address</strong></p>
+<ul class="simple">
+<li><p><cite>number</cite>, <cite>street</cite>, <cite>city</cite>, <cite>state</cite>, <cite>zip_code</cite>, <cite>country_iso_code</cite></p></li>
+</ul>
+<p><strong>Profile</strong></p>
+<ul class="simple">
+<li><p><cite>user</cite>: OneToOneField to <cite>User</cite></p></li>
+<li><p><cite>favorite_city</cite>: CharField</p></li>
+</ul>
+<p><strong>User (auth.User)</strong>
+- Built-in Django user model</p>
+</section>
+<section id="programming-interfaces-apis">
+<h2>Programming Interfaces (APIs)<a class="headerlink" href="#programming-interfaces-apis" title="Link to this heading">¶</a></h2>
+<p>This project does not include a REST API. All views are standard HTML rendered views:</p>
+<ul class="simple">
+<li><p><cite>/lettings/</cite>: List of lettings</p></li>
+<li><p><cite>/lettings/&lt;id&gt;/</cite>: Letting detail</p></li>
+<li><p><cite>/profiles/</cite>: List of user profiles</p></li>
+<li><p><cite>/profiles/&lt;username&gt;/</cite>: Profile detail</p></li>
+</ul>
+<p>Each route is handled by a function-based view in <cite>views.py</cite>, with associated HTML templates.</p>
+</section>
+<section id="user-guide">
+<h2>User Guide<a class="headerlink" href="#user-guide" title="Link to this heading">¶</a></h2>
+<p>Use cases:</p>
+<ol class="arabic simple">
+<li><p><strong>Display all user profiles</strong>: <cite>/profiles/</cite></p></li>
+<li><p><strong>View details of a specific profile</strong>: <cite>/profiles/&lt;username&gt;/</cite></p></li>
+<li><p><strong>List available lettings</strong>: <cite>/lettings/</cite></p></li>
+<li><p><strong>Show detail of a specific letting</strong>: <cite>/lettings/&lt;id&gt;/</cite></p></li>
+</ol>
+<p>Admin panel: available at <cite>/admin/</cite> after creating a superuser:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>manage.py<span class="w"> </span>createsuperuser
+</pre></div>
+</div>
+</section>
+<section id="deployment">
+<h2>Deployment<a class="headerlink" href="#deployment" title="Link to this heading">¶</a></h2>
+<p>CI/CD is automated via GitHub Actions:</p>
+<ul class="simple">
+<li><p><cite>master</cite> branch:</p></li>
+<li><p>Linting + Tests + coverage &gt; 80%</p></li>
+<li><p>Build Docker image</p></li>
+<li><p>Push image to Docker Hub</p></li>
+<li><p>Manual deployment via Render</p></li>
+</ul>
+<p>Environment variables must be configured in <cite>.env</cite> or in Render settings:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>DEBUG=False
+SECRET_KEY=changeme
+ALLOWED_HOSTS=my-app.onrender.com
+SENTRY_DSN=&lt;optional&gt;
+</pre></div>
+</div>
+<p>Static files collection:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python<span class="w"> </span>manage.py<span class="w"> </span>collectstatic<span class="w"> </span>--noinput
+</pre></div>
+</div>
+<p>Database: uses SQLite3 by default. No remote configuration needed.</p>
+<p>To deploy production updates:</p>
+<ol class="arabic simple">
+<li><p>Push code to <cite>master</cite></p></li>
+<li><p>Wait for Docker Hub image build</p></li>
+<li><p>Trigger manual deploy on Render (“Manual Deploy”)</p></li>
+</ol>
+</section>
+<section id="application-management">
+<h2>Application Management<a class="headerlink" href="#application-management" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Tests</strong>: <cite>pytest –cov=.</cite> (expected coverage: &gt;80%)</p></li>
+<li><p><strong>Linting</strong>: <cite>flake8 .</cite></p></li>
+<li><p><strong>Logs &amp; errors</strong>: sent to Sentry (if configured)</p></li>
+<li><p><strong>Static files</strong>: served via <cite>whitenoise</cite> in production</p></li>
+</ul>
+</section>
 </section>
 
 
