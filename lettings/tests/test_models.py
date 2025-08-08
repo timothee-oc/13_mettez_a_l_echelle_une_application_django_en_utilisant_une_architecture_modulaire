@@ -4,7 +4,6 @@ from lettings.models import Address, Letting
 
 @pytest.mark.django_db
 def test_address_str():
-    assert False
     address = Address.objects.create(
         number=10,
         street="Rue de Paris",
