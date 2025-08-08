@@ -56,3 +56,18 @@ jobs:
           GIT_SHA=$(echo $GITHUB_SHA | cut -c1-7)
           docker push $IMAGE_NAME:latest
           docker push $IMAGE_NAME:$GIT_SHA
+
+  deploy-to-render:
+    name: Deploy to Render
+    needs: build-push-docker
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+
+    steps:
+      - name: Deploy to Render
+        run: |
+          curl -X POST \
+            -H "Authorization: Bearer ${{ secrets.RENDER_API_KEY }}" \
+            -H "Content-Type: application/json" \
+            --data '{"serviceId": "${{ secrets.RENDER_SERVICE_ID }}", "clearCache": true}' \
+            https://api.render.com/v1/services/${{ secrets.RENDER_SERVICE_ID }}/deploys
